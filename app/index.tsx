@@ -7,11 +7,7 @@ import Animated, { FadeInDown } from 'react-native-reanimated';
 function SplashScreen() {
     const router = useRouter();
     
-    useEffect(() => {
-        const timer = setTimeout(() => {
-            router.replace('/(auth)/welcome');
-        }, 3000); // 3 seconds delay
-    }, []);
+   
 
 
     return(

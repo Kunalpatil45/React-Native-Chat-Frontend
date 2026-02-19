@@ -43,7 +43,7 @@ const styles = StyleSheet.create({
         borderColor: colors.neutral300,
         borderRadius: 50,
         borderCurve: 'continuous',
-        
+        marginBottom:12,
         paddingHorizontal: spacingX._15,
         backgroundColor: colors.neutral100,
     },
@@ -51,7 +51,6 @@ const styles = StyleSheet.create({
         borderColor: colors.primary,
     },
     input:{
-        
         flex: 1,
         color:colors.text,
         fontSize: verticalScale(16),

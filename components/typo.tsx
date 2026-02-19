@@ -3,7 +3,7 @@ import { Text, View } from "react-native";
 import { TypoProps } from "@/type";
 import { verticalScale } from "@/utils/styling";
 
-const typo = ({
+const Typo = ({
     size =16,
     color = colors.text,
     fontWeight = "400",
@@ -26,4 +26,4 @@ const typo = ({
 }
 
 
-export default typo;
+export default Typo;

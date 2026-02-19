@@ -7,7 +7,8 @@ export const login = async(
     password:string
     ):Promise<{token:string}> => {
     try{
-        const response = await axios.post(`${API_URL}/auth/login`,{
+        console.log("LOGIN URL EXACT:", `${API_URL}/login`);
+        const response = await axios.post(`${API_URL}/login`,{
             email,
             password
         })
@@ -28,7 +29,9 @@ export const register = async(
     avatar?:string | null
     ):Promise<{token:string}> => {
     try{
-        const response = await axios.post(`${API_URL}/auth/register`,{
+        console.log("reached here :",API_URL);
+
+        const response = await axios.post(`${API_URL}/register`,{
             email,
             password,
             name,

@@ -1,6 +1,6 @@
 import ScreenWrapper from "@/components/ScreenWrapper";
 import { View, Text , StyleSheet} from "react-native";  
-import Typo from "@/components/typo";
+import Typo from "@/components/Typo";
 import { spacingX } from "@/constants/theme";
 import { colors } from "@/constants/theme";
 import { verticalScale } from "@/utils/styling";
