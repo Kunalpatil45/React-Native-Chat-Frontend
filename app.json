@@ -7,7 +7,7 @@
     "icon": "./assets/images/icon.png",
     "scheme": "frontend",
     "userInterfaceStyle": "automatic",
-    "newArchEnabled": true,
+    "newArchEnabled": false,
     "ios": {
       "supportsTablet": true
     },
@@ -42,7 +42,7 @@
     ],
     "experiments": {
       "typedRoutes": true,
-      "reactCompiler": true
+      "reactCompiler": false
     },
     "extra": {
       "router": {},
@@ -54,7 +54,8 @@
       "policy": "appVersion"
     },
     "updates": {
-      "url": "https://u.expo.dev/25a79db8-b423-4f6d-88e4-db08176f9cf6"
+      "url": "https://u.expo.dev/25a79db8-b423-4f6d-88e4-db08176f9cf6",
+      "fallbackToCacheTimeout": 30000
     }
   }
 }
