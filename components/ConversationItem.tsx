@@ -7,20 +7,19 @@ import moment from "moment"
 import { ConversationListItemProps } from '@/type'
 import { useAuth } from '@/contexts/authContext'
 const ConversationItem = ({ item, showDivider, router }: ConversationListItemProps) => {
-    const {user:currentUser} = useAuth();
+    const { user: currentUser } = useAuth();
     const lastMessage: any = item?.lastMessage;
     const isDirect = item.type == 'direct';
-    let avatar =item.avatar;
-    const otherParticipants = isDirect? item.participants.find(p=>p._id !=currentUser?.id):null;
+    let avatar = item.avatar;
+    const otherParticipants = isDirect ? item.participants.find(p => p._id != currentUser?.id) : null;
 
-    if(isDirect &&otherParticipants) avatar = otherParticipants?.avatar;
 
-    const openConversation = () => {};
+    if (isDirect && otherParticipants) avatar = otherParticipants?.avatar;
 
-    
+
 
     const getLastMessageContent = () => {
-        if (!lastMessage) return "Say hi";
+        if (!lastMessage) return "Say hi 👋";
         return lastMessage?.attachment ? "Image" : lastMessage?.content || "";
     };
 
@@ -39,6 +38,20 @@ const ConversationItem = ({ item, showDivider, router }: ConversationListItemPro
         return messageDate.format("MMM D YYYY");
     };
 
+    const openConversation = () => {
+        router.push({
+            pathname: "/(main)/Conversation",
+            params: {
+                id: item._id,
+                name: item.name,
+                avatar: item.avatar,
+                type: item.type,
+                participants: JSON.stringify(item.participants),
+            }
+        });
+
+    };
+
     return (
         <View>
             <TouchableOpacity
@@ -50,7 +63,7 @@ const ConversationItem = ({ item, showDivider, router }: ConversationListItemPro
                 <View style={{ flex: 1 }}>
                     <View style={styles.row}>
                         <Typo size={17} fontWeight={'600'}>
-                            {isDirect ?otherParticipants?.name :item?.name}
+                            {isDirect ? otherParticipants?.name : item?.name}
                         </Typo>
 
                         {lastMessage && (

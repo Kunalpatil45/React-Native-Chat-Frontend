@@ -113,7 +113,6 @@ const ProfileModels = () => {
         {
             setLoading(true);
             const res =  await uploadFileToCloudnary(avatar,"profiles");
-            console.log("result",res);
             if(res.success )
             {
                 data.avatar = res.data;

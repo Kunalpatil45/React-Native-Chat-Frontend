@@ -4,7 +4,7 @@ import { io, Socket } from "socket.io-client";
 
 let socket: Socket | null = null;
 
-console.log("socket",socket);
+
 
 export async function connectSocket(): Promise<Socket | null> {
     const token = await AsyncStorage.getItem("token");
@@ -12,7 +12,7 @@ export async function connectSocket(): Promise<Socket | null> {
     if (!token)
         throw new Error("no token found . user must login");
     
-console.log("socket",socket);
+
 
     if (!socket) {
         socket = io(API_URL, {
@@ -20,7 +20,6 @@ console.log("socket",socket);
             
         })
 
-        console.log("socket",socket);
         
 
         await new Promise((resolve) => {

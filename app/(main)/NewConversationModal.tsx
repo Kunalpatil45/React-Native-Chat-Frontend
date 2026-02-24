@@ -21,11 +21,11 @@ import { uploadFileToCloudnary } from '@/Services/ImageService';
 const NewConversationModal = () => {
   const [GroupAvatar, setGroupAvatar] = useState<{ uri: string } | null>(null)
   const [GroupName, setGroupName] = useState("");
-  const [contacts , setContacts] = useState([]);
-  const [selectedParticipants,setSelectedParticipants] = useState<string[]>([]);
-  const [loading,setloading]= useState(false);
+  const [contacts, setContacts] = useState([]);
+  const [selectedParticipants, setSelectedParticipants] = useState<string[]>([]);
+  const [loading, setloading] = useState(false);
 
-  const {user:currentUser} = useAuth();
+  const { user: currentUser } = useAuth();
   const { isGroup } = useLocalSearchParams();
   console.log("isGroup", isGroup);
 
@@ -47,10 +47,10 @@ const NewConversationModal = () => {
     }
   }
 
-  const toggleParticipant = (user:any) =>{
-    setSelectedParticipants((prev:any)=>{
-      if(prev.includes(user.id)){
-        return prev.filter((id:string)=> id != user.id);
+  const toggleParticipant = (user: any) => {
+    setSelectedParticipants((prev: any) => {
+      if (prev.includes(user.id)) {
+        return prev.filter((id: string) => id != user.id);
 
       }
       return [...prev, user.id];
@@ -58,95 +58,88 @@ const NewConversationModal = () => {
   }
 
   const onSelectUser = (user: any) => {
-    if(!currentUser)
-    {
-      Alert.alert("Authentication","Please Login To StartConversation ");
+    if (!currentUser) {
+      Alert.alert("Authentication", "Please Login To StartConversation ");
       return;
     }
 
-    if(isGroupMode)
-    {
+    if (isGroupMode) {
       toggleParticipant(user);
     }
-    else{
+    else {
       newConversation({
-        type:"direct",
-        participants:[currentUser.id,user.id]
+        type: "direct",
+        participants: [currentUser.id, user.id]
       });
     }
   }
 
-  const createGroup = async()=>{
+  const createGroup = async () => {
     console.log("geoup btn clicked");
-    if(!GroupName.trim() || !currentUser || selectedParticipants.length<2) return;
+    if (!GroupName.trim() || !currentUser || selectedParticipants.length < 2) return;
 
     setloading(true);
-    try{
-      let avatar =null;
-      if(GroupAvatar)
-        {
-          const uploadRes = await uploadFileToCloudnary(GroupAvatar,"groupAvatar");
-          if(uploadRes.success)
-          {
-            avatar = uploadRes.data;
-          }
+    try {
+      let avatar = null;
+      if (GroupAvatar) {
+        const uploadRes = await uploadFileToCloudnary(GroupAvatar, "groupAvatar");
+        if (uploadRes.success) {
+          avatar = uploadRes.data;
+        }
 
-          newConversation({
-            type:'group',
-            participants:[currentUser.id, ...selectedParticipants],
-            name:GroupName,
-            avatar
-          })
-        } 
-    }catch(err)
-    {
-      console.log("Error creating Group ",err );
-      Alert.alert("Error","Somthing Went Wrong ");  
-    }finally{
+        newConversation({
+          type: 'group',
+          participants: [currentUser.id, ...selectedParticipants],
+          name: GroupName,
+          avatar
+        })
+
+      }
+    } catch (err) {
+      Alert.alert("Error", "Somthing Went Wrong ");
+    } finally {
       setloading(false);
     }
   }
 
-  useEffect(()=>{
+  useEffect(() => {
     getContacts(processGetContacts);
     newConversation(processNewConversation)
     getContacts(null)
 
-    return()=>{
-      getContacts(processGetContacts,true)
-      newConversation(processNewConversation ,true)
+    return () => {
+      getContacts(processGetContacts, true)
+      newConversation(processNewConversation, true)
     }
 
-  },[])
+  }, [])
 
-  const processGetContacts = (res:any)=>{
-    console.log("got contacts",res);
-    if(res.success){
+  const processGetContacts = (res: any) => {
+
+    if (res.success) {
       setContacts(res.data);
     }
   }
 
-   const processNewConversation = (res:any)=>{
-    console.log("got new conversation",res);
-    if(res.success)
-    {
+  const processNewConversation = (res: any) => {
+    if (res.success) {
       router.back()
       router.push({
-        pathname:"/(main)/Conversation",
-        params:{
-          id:res.data._id,
-          name:res.data.name,
-          avatar:res.data.avatar,
-          type:res.data.type,
+        pathname: "/(main)/Conversation",
+        params: {
+          id: res.data._id,
+          name: res.data.name,
+          avatar: res.data.avatar,
+          type: res.data.type,
           participants: JSON.stringify(res.data.participants),
 
         }
       })
-     
-      }
-       else{
-        console.log('error fetrching/Creating conversation:',res.msg);
-        Alert.alert(res.msg);
+
+    }
+    else {
+
+      Alert.alert(res.msg);
     }
   }
 
@@ -190,7 +183,7 @@ const NewConversationModal = () => {
               return (
                 <TouchableOpacity
                   key={index}
-                  style={[styles.contactRow ,isSelected && styles.selectedContact]}
+                  style={[styles.contactRow, isSelected && styles.selectedContact]}
                   onPress={() => onSelectUser(user)}
                 >
                   <Avatar size={45} uri={user.avatar} />
@@ -199,7 +192,7 @@ const NewConversationModal = () => {
                   {
                     isGroupMode && (
                       <View style={styles.selectionIndicator}>
-                        <View style={[styles.checkBox, isSelected && styles.checked]}/>
+                        <View style={[styles.checkBox, isSelected && styles.checked]} />
                       </View>
                     )
                   }
@@ -211,12 +204,12 @@ const NewConversationModal = () => {
 
         </ScrollView>
         {
-          isGroupMode && selectedParticipants.length>=2 && (
+          isGroupMode && selectedParticipants.length >= 2 && (
             <View style={styles.createGroupButton}>
               <Button
-              onPress={createGroup}
-              disabled={!GroupName.trim()}
-              loading={loading}>
+                onPress={createGroup}
+                disabled={!GroupName.trim()}
+                loading={loading}>
                 <Typo fontWeight={"bold"} size={17}>Create Group</Typo>
               </Button>
             </View>
@@ -251,8 +244,8 @@ const styles = StyleSheet.create({
   },
   contactRow: {
     flexDirection: "row",
-    alignItems:"center",
-    gap:spacingX._10,
+    alignItems: "center",
+    gap: spacingX._10,
     paddingVertical: spacingY._5,
   },
   selectedContact: {

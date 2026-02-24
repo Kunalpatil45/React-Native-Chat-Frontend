@@ -31,16 +31,17 @@ const Login = () => {
         }
 
         try{
-            console.log("login.tsx reached");
+            
             setLoading(true);
             await signIn(
                 emailRef.current,
                 passwordRef.current
             );
+            
         }
         catch(error)
         {
-            Alert.alert("Login Failed ");
+            Alert.alert("Login Failed " , "Please check your credentials and try again.");
         }
         finally
         {
@@ -56,9 +57,11 @@ const Login = () => {
                 <View style={styles.container}>
                     <View style={styles.header}>
                         <BackButton />
+                        <Pressable onPress={()=> Alert.alert("Forget Password?", "Screen Under Development... ")}>
                         <Typo size={17} color={colors.white}>
                             Forget Password?
                         </Typo>
+                        </Pressable>
                     </View>
                     <View style={styles.content}>
                         <ScrollView

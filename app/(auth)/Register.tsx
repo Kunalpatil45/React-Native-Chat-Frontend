@@ -185,6 +185,11 @@ const Register = () => {
       return;
     }
 
+    if(passwordRef.current.length < 6){
+        Alert.alert("Password must be at least 6 characters long");
+        return;
+    }
+
     try {
       setLoading(true);
       await signUp(
@@ -200,6 +205,10 @@ const Register = () => {
     }
   };
 
+  const showForget = () => {
+    Alert.alert("Need Some Help?", "Please contact support at @kunalpatil.45 on Instagram for assistance .");
+  }
+
   return (
     <KeyboardAvoidingView
       style={{ flex: 1 }}
@@ -209,10 +218,13 @@ const Register = () => {
         <View style={styles.container}>
           {/* Header */}
           <View style={styles.header}>
-            <BackButton />
-            <Typo size={17} color={colors.white}>
+            <BackButton  />
+            <Pressable  onPress={showForget}>
+              <Typo size={17} color={colors.white}>
               Need Some Help?
             </Typo>
+            </Pressable>
+            
           </View>
 
           {/* Content */}

@@ -30,7 +30,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
     const loadToken = async () => {
         const storedToken = await AsyncStorage.getItem("token")
-        console.log("stored token",storedToken);
+        
         if (storedToken) {
             try {
                 const decoded = jwtDecode<DecodedTokenProps>(storedToken);
@@ -71,18 +71,16 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
     const updateToken = async (token: string) => {
         if (token) {
-            console.log("token is there",token);
             setToken(token);
             await AsyncStorage.setItem("token", token);
             const decoded = jwtDecode<DecodedTokenProps>(token);
-            console.log("decoded codw ", decoded);
+            
             setUser(decoded.user);
 
         }
     }
 
     const signIn = async (email: string, password: string) => {
-        console.log("Login reached signIn");
         const response = await login(email, password);
         await updateToken(response.token);
         await connectSocket();
@@ -90,7 +88,6 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     }
 
     const signUp = async (email: string, password: string, name: string, avatar?: string | null) => {
-        console.log("Login reached signUn");
         const response = await register(email, password, name, avatar);
         await updateToken(response.token);
         router.replace("/(auth)/login");
