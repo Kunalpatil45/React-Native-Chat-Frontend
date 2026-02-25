@@ -20,9 +20,9 @@ function SplashScreen() {
                 resizeMode="contain" />
 
             <Text style={styles.text}>Random Chat</Text>
-            <Typo color={colors.white} fontWeight={'600'} style={styles.version}>Version 1.0.1</Typo>
+            <Typo color={colors.white} fontWeight={'600'} style={styles.version}>Version 1.0.0</Typo>
 
-            <Text style={styles.footer}>Develop by Kunal Patil</Text>
+            <Text style={styles.footer}>Developed by Kunal Patil</Text>
 
         </View>
     );
