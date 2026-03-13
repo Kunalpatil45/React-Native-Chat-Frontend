@@ -17,6 +17,8 @@ import * as ImagePicker from 'expo-image-picker'
 import { uploadFileToCloudnary } from '@/Services/ImageService'
 import { getMessage, newMesaage } from '@/socket/socketEvents'
 import { MessageProps } from '@/type'
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+
 
 const Conversation = () => {
   const {
@@ -59,6 +61,11 @@ const Conversation = () => {
     if (!currenUser) return;
 
     setLoading(true);
+
+    if(message == "hi" || message == "Hello" || message == "Hi")
+    {
+      
+    }
 
     try {
       let attachement = null;
@@ -194,7 +201,8 @@ const Conversation = () => {
               }}
               icon={
                 <TouchableOpacity style={styles.inputIcon} onPress={onPickFile}>
-                  <Icons.Plus weight='bold' color={colors.black} size={verticalScale(25)} />
+                  <Icons.Plus weight='bold' color={colors.black} size={verticalScale(22)} 
+                  />
                   {
                     selectedFile && selectedFile.uri && (
                       <Image
@@ -242,11 +250,16 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   footer: {
+    position: "absolute",
+    bottom: 0,
+    left: 0,
+    right: 0,
     padding: spacingY._10,
     paddingBottom: verticalScale(5),
   },
   content: {
     flex: 1,
+    height: "100%",
     backgroundColor: colors.white,
     borderTopLeftRadius: radius._50,
     borderTopRightRadius: radius._50,
@@ -260,6 +273,7 @@ const styles = StyleSheet.create({
     padding: 8,
   },
   selectedFile: {
+    position: "absolute",
     height: verticalScale(38),
     width: verticalScale(38),
     borderRadius: radius.full,

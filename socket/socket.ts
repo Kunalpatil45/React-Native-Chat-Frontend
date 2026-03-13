@@ -7,35 +7,47 @@ let socket: Socket | null = null;
 
 
 export async function connectSocket(): Promise<Socket | null> {
-    const token = await AsyncStorage.getItem("token");
-    
-    if (!token)
-        throw new Error("no token found . user must login");
-    
 
+  try {
+
+    const token = await AsyncStorage.getItem("token");
+
+    if (!token) {
+      console.log("No token found, skipping socket connection");
+      return null;
+    }
 
     if (!socket) {
-        socket = io(API_URL, {
-            auth: { token },
-            
-        })
 
-        
+      socket = io(API_URL, {
+        auth: { token },
+        timeout: 5000,          // stop trying after 5s
+        reconnection: true,
+        reconnectionAttempts: 5,
+      });
 
-        await new Promise((resolve) => {
-            
-            socket?.on("connect", () => {
-                resolve(true);
-            })
-        })
+      socket.on("connect", () => {
+        console.log("Socket connected");
+      });
 
-        socket.on("disconnect", () => {
-            console.log("Socket Discconected");
-        });
+      socket.on("connect_error", (err) => {
+        console.log("Socket connection failed (offline maybe)");
+      });
+
+      socket.on("disconnect", () => {
+        console.log("Socket disconnected");
+      });
+
     }
 
     return socket;
 
+  } catch (err) {
+
+    console.log("Socket init error", err);
+    return null;
+
+  }
 }
 
 export function getSocket(): Socket | null {
