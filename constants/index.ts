@@ -30,7 +30,7 @@ const DEV_API = Platform.OS === "android"
     : "http://localhost:3000";
 
 // change this flag when needed
-const USE_PROD = false;
+const USE_PROD = true;
 
 export const API_URL = USE_PROD ? PROD_API : DEV_API;
 
