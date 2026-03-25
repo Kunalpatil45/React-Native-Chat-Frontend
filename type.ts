@@ -23,6 +23,8 @@ export interface UserProps {
   name: string;
   avatar?: string | null;
   id?: string;
+  created: Date;
+  // Add any additional fields as needed
   // Add any additional fields from the token payload as needed
 }
 export interface UserDataProps {
@@ -57,6 +59,9 @@ export type AuthContextProps = {
     avatar?: string
   ) => Promise<void>;
   signOut: () => Promise<void>;
+  forgotPassword: (email: string) => Promise<void>;
+  verifyOtp: (email: string, otp: string) => Promise<void>;
+  resetPassword: (email: string, otp: string, newPassword: string) => Promise<void>;
   updateToken: (token: string) => Promise<void>;
 };
 
@@ -139,6 +144,7 @@ export type MessageProps = {
     avatar: string | null;
   };
   content: string;
+  type: "text" | "image" | "ai";
   attachement?: string | null;
   isMe?: boolean;
   createdAt: string;

@@ -57,7 +57,7 @@ const Login = () => {
                 <View style={styles.container}>
                     <View style={styles.header}>
                         <BackButton />
-                        <Pressable onPress={()=> Alert.alert("Forget Password?", "Screen Under Development... ")}>
+                        <Pressable onPress={()=> router.push("/(auth)/resetpass")} >
                         <Typo size={17} color={colors.white}>
                             Forget Password?
                         </Typo>

@@ -13,6 +13,7 @@ import Avatar from '@/components/Avatar'
 import MessageItem from '@/components/MessageItem'
 import Input from '@/components/Input'
 import * as ImagePicker from 'expo-image-picker'
+import { getSocket } from '@/socket/socket'
 
 import { uploadFileToCloudnary } from '@/Services/ImageService'
 import { getMessage, newMesaage } from '@/socket/socketEvents'
@@ -31,6 +32,9 @@ const Conversation = () => {
   const [selectedFile, setSelectedFile] = React.useState<{ uri: string } | null>(null);
   const [loading, setLoading] = React.useState(false);
   const { user: currenUser } = useAuth();
+  const flatListRef = React.useRef<FlatList>(null);
+  const [aiTyping, setAiTyping] = React.useState(false);
+  const [dots, setDots] = React.useState(".");
 
   const participants = JSON.parse(stringifiedparticipants as string);
 
@@ -138,10 +142,37 @@ const Conversation = () => {
       newMesaage(newMessageHandler, true);
       getMessage(messageHandler, true);
     };
-
-
-
   }, [conversationId]);
+
+  useEffect(() => {
+    const socket = getSocket();
+    if(!socket) return;
+    const handleTyping = (status: boolean) => {
+      setAiTyping(status);
+    };
+
+    socket.on("aiTyping", handleTyping);
+
+    return () => {
+      socket.off("aiTyping", handleTyping);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!aiTyping) return;
+
+    const interval = setInterval(() => {
+      setDots((prev) => (prev.length >= 3 ? "." : prev + "."));
+    }, 400);
+
+    return () => clearInterval(interval);
+  }, [aiTyping]);
+
+
+
+  useEffect(() => {
+    flatListRef.current?.scrollToEnd({ animated: false });
+  }, [messages]);
 
 
 
@@ -165,11 +196,12 @@ const Conversation = () => {
         }
       />
       <KeyboardAvoidingView
-        behavior={"padding"}
-        keyboardVerticalOffset={Platform.OS === 'ios' ? 60 : 0}
+        behavior={Platform.OS === 'ios' ? 'padding' : "height"}
+        keyboardVerticalOffset={-21}
         style={styles.container}>
         <View style={styles.content}>
           <FlatList
+            ref={flatListRef}
             data={messages}
             inverted={false}
             showsVerticalScrollIndicator={false}
@@ -181,12 +213,40 @@ const Conversation = () => {
             keyboardDismissMode="on-drag"
             keyboardShouldPersistTaps="handled"
           />
+          {aiTyping && (
+            <View style={{
+              flexDirection: "row",
+              alignItems: "flex-end",
+              marginVertical: 6,
+              marginLeft: 10
+            }}>
+
+              {/* Avatar */}
+              <Avatar
+                uri="https://cdn-icons-png.flaticon.com/512/4712/4712109.png"
+                size={30}
+              />
+
+              {/* Bubble */}
+              <View style={{
+                backgroundColor: "#e0f7fa",
+                padding: 10,
+                borderRadius: 15,
+                marginLeft: 8
+              }}>
+                <Typo size={14} color="gray">
+                  AI is typing{dots}
+                </Typo>
+              </View>
+
+            </View>
+          )}
 
           <View style={styles.footer}>
             <Input
               value={message}
               onChangeText={setMessage}
-              placeholder='Type a message'
+              placeholder='@AI Type a message ...'
               containerStyle={{
                 paddingLeft: spacingX._10,
                 paddingRight: scale(67),

@@ -1,18 +1,18 @@
-import { ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native'
-import React, { useEffect, useState } from 'react'
+import Button from '@/components/Button'
+import ConversationItem from '@/components/ConversationItem'
+import Loading from '@/components/Loading'
 import ScreenWrapper from '@/components/ScreenWrapper'
 import Typo from '@/components/Typo'
 import { colors, radius, spacingX, spacingY } from '@/constants/theme'
-import Button from '@/components/Button'
 import { useAuth } from '@/contexts/authContext'
-import { verticalScale } from '@/utils/styling'
-import * as Icons from 'phosphor-react-native'
-import { useRouter } from 'expo-router'
-import ConversationItem from '@/components/ConversationItem'
-import Loading from '@/components/Loading'
 import { getConversation, newConversation, newMesaage } from '@/socket/socketEvents'
 import { ConversationProps, ResponseProps } from '@/type'
-import LottieView from 'lottie-react-native';
+import { verticalScale } from '@/utils/styling'
+import { useRouter } from 'expo-router'
+import LottieView from 'lottie-react-native'
+import * as Icons from 'phosphor-react-native'
+import React, { useEffect, useState } from 'react'
+import { ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native'
 
 const Home = () => {
 
@@ -102,11 +102,11 @@ const Home = () => {
         <View style={styles.header}>
           <View style={{ flex: 1 }}>
             <Typo color={colors.white} size={19} textProps={{ numberOfLines: 1 }}>
-              welcome back{" "}
+              Hey {" "}
               <Typo size={20} color={colors.white} fontWeight={"800"}>
                 {currentUser?.name}
               </Typo>{" "}
-              💀
+              🥀
             </Typo>
           </View>
 

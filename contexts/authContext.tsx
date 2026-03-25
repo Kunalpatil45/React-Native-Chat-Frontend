@@ -5,6 +5,8 @@ import AsyncStorage from "@react-native-async-storage/async-storage"
 import { jwtDecode } from "jwt-decode"
 import { login, register } from "@/Services/authServices";
 import { connectSocket, disconnectSocket } from "../socket/socket";
+import { API_URL } from "@/constants";
+import axios from "axios"
 
 export const AuthContext = createContext<AuthContextProps>({
     token: null,
@@ -12,6 +14,9 @@ export const AuthContext = createContext<AuthContextProps>({
     signIn: async () => { },
     signUp: async () => { },
     signOut: async () => { },
+    forgotPassword: async () => { },
+    verifyOtp: async () => { },
+    resetPassword: async () => { },
     updateToken: async () => { },
 
 });
@@ -30,7 +35,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
     const loadToken = async () => {
         const storedToken = await AsyncStorage.getItem("token")
-        
+
         if (storedToken) {
             try {
                 const decoded = jwtDecode<DecodedTokenProps>(storedToken);
@@ -74,7 +79,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
             setToken(token);
             await AsyncStorage.setItem("token", token);
             const decoded = jwtDecode<DecodedTokenProps>(token);
-            
+
             setUser(decoded.user);
 
         }
@@ -104,8 +109,56 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
 
 
+
+    // 🔥 FORGOT PASSWORD
+    const forgotPassword = async (email: string) => {
+        try {
+            const res = await axios.post(`${API_URL}/forgot-password`, {
+                email,
+            });
+
+            return res.data;
+        } catch (error: any) {
+            throw new Error(error?.response?.data?.message || "Failed to send OTP");
+        }
+    };
+
+
+    // 🔥 VERIFY OTP
+    const verifyOtp = async (email: string, otp: string) => {
+        try {
+            const res = await axios.post(`${API_URL}/verify-otp`, {
+                email,
+                otp,
+            });
+
+            return res.data;
+        } catch (error: any) {
+            throw new Error(error?.response?.data?.message || "Invalid OTP");
+        }
+    };
+
+
+    // 🔥 RESET PASSWORD
+    const resetPassword = async (email: string, password: string, otp: string) => {
+        console.log("frontend",email,otp,password)
+        try {
+            const res = await axios.post(`${API_URL}/reset-password`, {
+                email,
+                password,
+                otp
+            });
+
+            return res.data;
+        } catch (error: any) {
+            throw new Error(error?.response?.data?.message || "Reset failed");
+        }
+    };
+
+
+
     return (
-        <AuthContext.Provider value={{ token, user, signUp, signIn, updateToken, signOut }}>
+        <AuthContext.Provider value={{ token, user, signUp, signIn, updateToken, signOut, forgotPassword, verifyOtp, resetPassword }}>
             {children}
         </AuthContext.Provider>
     );
