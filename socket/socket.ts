@@ -2,7 +2,7 @@ import { API_URL } from "@/constants";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { io, Socket } from "socket.io-client";
 
-let socket: Socket | null = null;
+export let socket: Socket | null = null;
 
 
 

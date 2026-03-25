@@ -68,12 +68,12 @@ const Register = () => {
         <View style={styles.container}>
           {/* Header */}
           <View style={styles.header}>
-            <BackButton />
+            {/* <BackButton />
             <Pressable onPress={showForget}>
               <Typo size={17} color={colors.white}>
                 Need Some Help?
               </Typo>
-            </Pressable>
+            </Pressable> */}
 
           </View>
 
