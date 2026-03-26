@@ -16,7 +16,7 @@ export const CLOUDNARY_CLOUD_NAME = "dvvy1wzof";
 export const CLOUDNARY_IMAGE_PRESET = "Images" */
 
 
-import Constants from "expo-constants";
+
 import { Platform } from "react-native";
 import Constants from "expo-constants";
 const host = Constants.expoConfig?.hostUri?.split(":")[0];

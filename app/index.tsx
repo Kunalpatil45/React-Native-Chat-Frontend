@@ -3,10 +3,11 @@ import { colors } from '@/constants/theme';
 import { useRouter } from 'expo-router';
 import { StatusBar, StyleSheet, Text, View } from 'react-native';
 import Animated, { FadeInDown } from 'react-native-reanimated';
+import Constants from 'expo-constants';
 
 function SplashScreen() {
     const router = useRouter();
-
+    const appversion = Constants.expoConfig?.version;
     return (
         <View style={styles.Container}>
             <StatusBar
@@ -19,8 +20,8 @@ function SplashScreen() {
                 entering={FadeInDown.duration(2000)}
                 resizeMode="contain" />
 
-            <Text style={styles.text}>Random Chat</Text>
-            <Typo color={colors.white} fontWeight={'600'} style={styles.version}>Version 1.0.0</Typo>
+            <Text style={styles.text}>Random Chat hehe</Text>
+            <Typo color={colors.white} fontWeight={'600'} style={styles.version}>Version {appversion}</Typo>
 
             <Text style={styles.footer}>Developed by Kunal Patil</Text>
 

@@ -1,24 +1,23 @@
-import { Alert, FlatList, Image, KeyboardAvoidingView, Platform, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
-import React, { use, useEffect } from 'react'
+import Avatar from '@/components/Avatar'
+import BackButton from '@/components/BackButton'
+import Header from '@/components/Header'
+import Input from '@/components/Input'
+import MessageItem from '@/components/MessageItem'
 import ScreenWrapper from '@/components/ScreenWrapper'
 import Typo from '@/components/Typo'
 import { colors, radius, spacingX, spacingY } from '@/constants/theme'
-import { useLocalSearchParams } from 'expo-router'
 import { useAuth } from '@/contexts/authContext'
-import * as Icons from 'phosphor-react-native'
-import { scale, verticalScale } from '@/utils/styling'
-import Header from '@/components/Header'
-import BackButton from '@/components/BackButton'
-import Avatar from '@/components/Avatar'
-import MessageItem from '@/components/MessageItem'
-import Input from '@/components/Input'
-import * as ImagePicker from 'expo-image-picker'
 import { getSocket } from '@/socket/socket'
+import { scale, verticalScale } from '@/utils/styling'
+import * as ImagePicker from 'expo-image-picker'
+import { useLocalSearchParams } from 'expo-router'
+import * as Icons from 'phosphor-react-native'
+import React, { useEffect } from 'react'
+import { Alert, FlatList, Image, KeyboardAvoidingView, Platform, StyleSheet, TouchableOpacity, View } from 'react-native'
 
 import { uploadFileToCloudnary } from '@/Services/ImageService'
 import { getMessage, newMesaage } from '@/socket/socketEvents'
 import { MessageProps } from '@/type'
-import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
 
 const Conversation = () => {
@@ -66,9 +65,8 @@ const Conversation = () => {
 
     setLoading(true);
 
-    if(message == "hi" || message == "Hello" || message == "Hi")
-    {
-      
+    if (message == "hi" || message == "Hello" || message == "Hi") {
+
     }
 
     try {
@@ -153,7 +151,7 @@ const Conversation = () => {
 
   useEffect(() => {
     const socket = getSocket();
-    if(!socket) return;
+    if (!socket) return;
     const handleTyping = (status: boolean) => {
       setAiTyping(status);
     };
@@ -212,7 +210,10 @@ const Conversation = () => {
             data={messages}
             inverted={false}
             showsVerticalScrollIndicator={false}
-            contentContainerStyle={styles.messageContent}
+            contentContainerStyle={[
+              styles.messageContent,
+              { paddingBottom: verticalScale(90) } // 👈 FIX
+            ]}
             renderItem={({ item }) => (
               <MessageItem item={item} isDirect={isDirect} />
             )}
@@ -261,7 +262,7 @@ const Conversation = () => {
               }}
               icon={
                 <TouchableOpacity style={styles.inputIcon} onPress={onPickFile}>
-                  <Icons.Plus weight='bold' color={colors.black} size={verticalScale(22)} 
+                  <Icons.Plus weight='bold' color={colors.black} size={verticalScale(22)}
                   />
                   {
                     selectedFile && selectedFile.uri && (
@@ -305,9 +306,11 @@ const styles = StyleSheet.create({
     paddingTop: spacingY._20,
     paddingBottom: spacingY._10,
     gap: spacingY._12,
+
   },
   messageContainer: {
     flex: 1,
+
   },
   footer: {
     position: "absolute",

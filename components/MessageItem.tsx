@@ -124,7 +124,7 @@ const MessageItem = ({
         minute: '2-digit'
     });
 
-  
+
     return (
         <View
             style={[
@@ -134,8 +134,8 @@ const MessageItem = ({
         >
 
             {(!isMe && !isDirect) || isAI ? (
-  <Avatar uri={item?.sender?.avatar} size={30} style={styles.messageAvatar} />
-) : null}
+                <Avatar uri={item?.sender?.avatar} size={30} style={styles.messageAvatar} />
+            ) : null}
 
             <View style={[
                 styles.messageBubble,
@@ -148,14 +148,14 @@ const MessageItem = ({
 
                 {/* Name */}
                 {!isMe && !isDirect && (
-  <Typo color={colors.neutral900} fontWeight={'600'} size={13}>
-    {item.sender.name}
-  </Typo>
-)}
+                    <Typo color={colors.neutral900} fontWeight={'600'} size={13}>
+                        {item.sender.name}
+                    </Typo>
+                )}
 
                 {/* AI Label */}
                 {isAI && (
-                    <Typo size={16} color={colors.neutral700} style={{ alignSelf: "flex-start" , fontWeight:"600"}}>
+                    <Typo size={16} color={colors.neutral700} style={{ alignSelf: "flex-start", fontWeight: "600" }}>
                         {item.sender.name || "AI"}
                     </Typo>
                 )}

@@ -24,6 +24,7 @@ export interface UserProps {
   avatar?: string | null;
   id?: string;
   created: Date;
+  _id?:string;
   // Add any additional fields as needed
   // Add any additional fields from the token payload as needed
 }
