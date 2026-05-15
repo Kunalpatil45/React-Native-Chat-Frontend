@@ -1,7 +1,7 @@
 import { View, Text, StyleSheet, TextInput } from 'react-native'
 import React, { useState } from 'react'
 import { InputProps } from '@/type'
-import { colors, radius, spacingX } from '@/constants/theme';
+import { colors, radius, spacingX, spacingY } from '@/constants/theme';
 import { verticalScale } from '@/utils/styling';
 
 const Input = (props:InputProps) => {
@@ -55,5 +55,6 @@ const styles = StyleSheet.create({
         color:colors.text,
         fontSize: verticalScale(16),
         fontWeight: '500',
+        
     }
 })

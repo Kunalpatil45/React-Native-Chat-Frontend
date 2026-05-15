@@ -76,7 +76,7 @@ const Login = () => {
                                     color={colors.neutral600}>Hurry up and Login to your account</Typo>
 
                             </View>
-
+                            <View style={styles.inputGroup}>
                             <Input
                                 onChangeText={(value: string) => emailRef.current = value}
                                 placeholder='Enter Email Here'
@@ -88,7 +88,7 @@ const Login = () => {
                                 onChangeText={(value: string) => passwordRef.current = value}
                                 icon={<Icons.Lock size={verticalScale(20)} color={colors.neutral600} />}
                             />
-
+                            </View>
                             <View
                                 style={{ marginTop: spacingY._25, marginBottom: spacingY._15 }}>
                                 <Button
@@ -146,6 +146,10 @@ const styles = StyleSheet.create({
         borderTopRightRadius: radius._50,
         paddingHorizontal: spacingX._20,
         paddingTop: spacingX._30,
+        gap: spacingY._20,
+    },
+    inputGroup:{
+        gap: spacingY._10,
     },
     form: {
         paddingBottom: spacingY._20,

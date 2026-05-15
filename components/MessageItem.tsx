@@ -111,7 +111,7 @@ const MessageItem = ({
     item,
     isDirect,
 }: { item: MessageProps, isDirect: boolean }) => {
-    /* const [aiTyping, setAiTyping] = React.useState(false); */
+    const [aiTyping, setAiTyping] = React.useState(false);
     const { user: currentUser } = useAuth();
 
     const isMe = currentUser?.id == item.sender.id;

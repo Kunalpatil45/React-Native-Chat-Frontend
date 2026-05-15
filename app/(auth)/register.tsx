@@ -68,12 +68,10 @@ const Register = () => {
         <View style={styles.container}>
           {/* Header */}
           <View style={styles.header}>
-            {/* <BackButton />
+            {/* <BackButton /> */}
             <Pressable onPress={showForget}>
-              <Typo size={17} color={colors.white}>
-                Need Some Help?
-              </Typo>
-            </Pressable> */}
+              
+            </Pressable>
 
           </View>
 
@@ -96,7 +94,7 @@ const Register = () => {
                   Create an Account to Continue
                 </Typo>
               </View>
-
+              <View style={styles.inputGroup}>
               {/* Inputs */}
               <Input
                 onChangeText={(v: string) => (nameRef.current = v)}
@@ -131,7 +129,7 @@ const Register = () => {
                   />
                 }
               />
-
+              </View>
               {/* Button */}
               <View style={styles.buttonBox}>
                 <Button loading={loading} onPress={submitHandler}>
@@ -204,5 +202,8 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",
+  },
+  inputGroup:{
+    gap: spacingY._10,
   },
 });
